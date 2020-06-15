@@ -1,0 +1,4 @@
+.csvs
+.idea
+coronavirus_tracking.iml
+django_files/db.sqlite3

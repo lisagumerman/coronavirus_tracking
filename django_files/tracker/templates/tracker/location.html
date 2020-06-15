@@ -1,0 +1,29 @@
+<h1>Coronavirus Tracking</h1>
+<h2>{{ location.name }}</h2>
+<div class="table">
+    <div class="column">
+        {% for entry in location.date_entries %}
+            <div class="cell">
+                <div class="date">{{ entry.date }}</div>
+                <div class="value">{{ entry.value }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<form action="{% url 'tracker:add_date' location.id %}" method="post">
+    {% csrf_token %}
+
+    <label for="date">Date:</label>
+    <input type="date" value="{{ next_date }}" name="date" />
+
+    <label for="value">Total</label>
+    <input type="number" name="value"/>
+
+
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <input type="submit" value="Add">
+</form>

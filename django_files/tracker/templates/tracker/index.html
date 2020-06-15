@@ -1,0 +1,20 @@
+<h1>Coronavirus Tracking</h1>
+{% if locations %}
+    <div class="table">
+        {% for location in locations %}
+            <div class="column">
+                <div class="header">
+                    <a href="{% url 'tracker:location' location.id %}">{{ location.name }}</a>
+                </div>
+                {% for entry in location.date_entries %}
+                    <div class="cell">
+                        <div class="date">{{ entry.date }}</div>
+                        <div class="value">{{ entry.value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No data available.</p>
+{% endif %}
