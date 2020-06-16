@@ -4,12 +4,12 @@ export class location {
     name : string;
     id: number;
     type: string;
-    dateEntries : dateEntry[];
+    date_entries : dateEntry[];
 
     constructor(name : string, id: number, type: string, date_entries: dateEntry[]) {
         this.name = name;
         this.id = id;
         this.type = type;
-        this.dateEntries = date_entries;
+        this.date_entries = date_entries;
     }
 }
