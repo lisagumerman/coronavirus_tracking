@@ -1,11 +1,12 @@
-from django.urls import path
-
+from django.urls import include, path
+from rest_framework import routers
 from . import views
+
+router = routers.DefaultRouter()
+router.register(r'index', views.IndexViewSet)
 
 app_name = 'tracker'
 urlpatterns = [
-    path('/', views.index, name='index'),
-    path('/<str:location_type>', views.locations, name="locations"),
-    path('/<int:location_id>', views.location, name='location')
+    path('/', include(router.urls))
 ]
 

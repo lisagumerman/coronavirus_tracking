@@ -1,8 +1,15 @@
 from django.http import Http404
 from django.core.serializers import serialize
+from rest_framework import viewsets
+from .serializers import LocationSerializer, DateEntrySerializer, DetailSerializer
 from .models import Location, LocationType
 from django.http import JsonResponse
 import json
+
+
+class IndexViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Location.objects.all().prefetch_related('date_entries')
+    serializer_class = LocationSerializer
 
 
 def index(request):
