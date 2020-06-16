@@ -4,10 +4,8 @@ from . import views
 
 app_name = 'tracker'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('/countries', views.countries, name='countries'),
-    path('/usa', views.usa, name='usa'),
-    path('/colorado', views.colorado, name='colorado'),
+    path('/', views.index, name='index'),
+    path('/<str:location_type>', views.locations, name="locations"),
     path('/<int:location_id>', views.location, name='location')
 ]
 

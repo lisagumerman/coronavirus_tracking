@@ -1,5 +1,5 @@
 .csvs
 .idea
 coronavirus_tracking.iml
-django_files/db.sqlite3
-react_files/node_modules
+/django_files/db.sqlite3
+/react_files/node_modules

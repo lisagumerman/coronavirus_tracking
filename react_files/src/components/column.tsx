@@ -1,11 +1,27 @@
-import * as React from "react";
+import React, {Component, ReactNode} from "react";
+import {location} from "../models/location";
+import {dateEntry} from "../models/date-entries";
 
-export interface ColumnProps { location: any }
+export interface ColumnProps { location: location }
 
-export class Column extends React.Component<ColumnProps, {}> {
+export class Column extends Component<ColumnProps, {}> {
 
-    render() {
-        return <h1>Hello from {this.props.location.name}</h1>
+    render() : ReactNode{
+        return (
+            <div className="column">
+                <div className="header">
+                    {this.props.location.name}
+                </div>
+                <div className="entries">
+                    {this.props.location.dateEntries.map((entry : dateEntry) => (
+                      <div className="entry" key={entry.id}>
+                          <div className="date">{entry.date}</div>
+                          <div className="value">{entry.value}</div>
+                      </div>
+                    ))
+                    }
+                </div>
+            </div>
+        )
     }
-
 }

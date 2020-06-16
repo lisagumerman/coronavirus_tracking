@@ -31,7 +31,7 @@ class Location(models.Model):
 
     @staticmethod
     def prefetch():
-        return Location.objects.prefetch_related('date_entries')
+        return Location.objects.prefetch_related('date_entries').prefetch_related('date_entries__detail')
 
 
 class DateEntry(models.Model):

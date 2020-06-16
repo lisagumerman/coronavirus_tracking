@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.table {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: flex;
+  flex-direction: row;
+} /* TODO ensure equal size of .value and .date */
