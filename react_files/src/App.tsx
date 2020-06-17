@@ -20,6 +20,7 @@ class App extends Component<{}, AppState> {
   render() : ReactNode {
     return (
         <div className="main">
+          <h1>Coronavirus Tracking</h1>
           <Table locations={this.state.locations} />
         </div>
     )
@@ -27,7 +28,7 @@ class App extends Component<{}, AppState> {
 
   async componentDidMount() {
     try {
-      let res = await fetch('http://localhost:8000/tracker/index/');
+      let res = await fetch('http://localhost:8000/tracker/');
       let body = await res.json();
       this.setState({locations: body})
     } catch (ex) {

@@ -16,8 +16,17 @@ class DateEntrySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SubLocationSerializer(serializers.ModelSerializer):
+    date_entries = DateEntrySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
 class LocationSerializer(serializers.ModelSerializer):
     date_entries = DateEntrySerializer(many=True, read_only=True)
+    children = SubLocationSerializer(many=True, read_only=True)
 
     class Meta:
         model = Location

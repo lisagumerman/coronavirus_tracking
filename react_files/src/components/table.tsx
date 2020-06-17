@@ -13,8 +13,6 @@ export class Table extends Component<TableProps, {}> {
     render() : ReactNode{
         let columns;
 
-        console.log(this.props.locations)
-
         if (typeof this.props.locations === 'undefined')
             columns = 'Waiting for data';
         else {

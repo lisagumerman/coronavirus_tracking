@@ -3,7 +3,7 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'index', views.IndexViewSet)
+router.register(r'locations', views.LocationViewSet, basename="location")
 
 app_name = 'tracker'
 urlpatterns = [

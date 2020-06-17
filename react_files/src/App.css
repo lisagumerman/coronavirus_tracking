@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.main {
+  padding: 20px;
+}
+
 .table {
   display: flex;
   flex-direction: row;
@@ -10,9 +14,21 @@
 .column {
   display: flex;
   flex-direction: column;
+  margin-right:20px;
+}
+
+.header {
+  border: 1px solid lightgray;
+  font-size:1.5em;
 }
 
 .entry {
   display: flex;
   flex-direction: row;
-} /* TODO ensure equal size of .value and .date */
+  width: 200px;
+  border: 1px solid lightgray;
+  border-top:0;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+

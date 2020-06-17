@@ -17,7 +17,7 @@ class Location(models.Model):
         choices=[(tag, tag.value) for tag in LocationType],  # Choices is a list of Tuple
         default=LocationType.N
     )
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, related_name="children")
 
     class Meta:
         ordering = ['type', 'name']
