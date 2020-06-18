@@ -1,4 +1,4 @@
-import {dateEntry} from "./date-entries";
+import {dateEntry} from "./date-entry";
 
 export class location {
     name : string;

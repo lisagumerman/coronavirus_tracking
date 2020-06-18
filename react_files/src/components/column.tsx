@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from "react";
 import {location} from "../models/location";
-import {dateEntry} from "../models/date-entries";
+import {dateEntry} from "../models/date-entry";
 
 export interface ColumnProps { location: location }
 
