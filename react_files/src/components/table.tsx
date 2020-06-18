@@ -6,9 +6,9 @@ export interface TableProps { locations: location[], type ?: string }
 
 export class Table extends Component<TableProps, {}> {
 
-    constructor(props : TableProps) {
-        super(props);
-    }
+    // constructor(props : TableProps) {
+    //     super(props);
+    // }
 
     render() : ReactNode{
         let columns;

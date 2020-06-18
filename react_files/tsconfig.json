@@ -21,6 +21,5 @@
   },
   "include": [
     "src"
-  ],
-  "noImplicitAny": false
+  ]
 }

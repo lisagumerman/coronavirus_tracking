@@ -23,10 +23,11 @@ class App extends Component<{}, AppState> {
 
   render() : ReactNode {
     let buttons = [] as JSX.Element[];
-
-
     for (let location_type in Object.keys(locationType).filter(key => isNaN(Number(key)))) {
-      buttons.push(<TypeButton location_type={location_type}/>)
+      buttons.push(
+          <TypeButton location_type={location_type} active={String(this.state.type) == location_type}
+                      key={location_type} onClick={() => this.changeType(location_type)}/>
+          )
     }
     return (
         <div className="main">
@@ -34,7 +35,7 @@ class App extends Component<{}, AppState> {
           <div className="buttonHolder">
             {buttons}
           </div>
-          <Table locations={this.state.locations} />
+          <Table locations={this.state.locations.filter((loc : location) => loc.type === locationType[this.state.type].charAt(0))} />
         </div>
     )
   }
@@ -45,11 +46,20 @@ class App extends Component<{}, AppState> {
     try {
       let res = await fetch('http://localhost:8000/tracker/locations/');
       let body = await res.json();
-      //TODO filter based on current state
       this.setState({locations: body})
     } catch (ex) {
       console.log(ex);
     }
+  }
+
+  changeType(location_type : string) {
+    console.log(location_type);
+    this.setState(
+        {
+          type : Number(location_type)
+        }
+    );
+    console.log(this.state);
   }
 
 }
