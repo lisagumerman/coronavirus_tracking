@@ -6,15 +6,14 @@ export interface TableProps { locations: location[], type ?: string }
 
 export class Table extends Component<TableProps, {}> {
 
-    // constructor(props : TableProps) {
-    //     super(props);
-    // }
-
     render() : ReactNode{
         let columns;
 
-        if (typeof this.props.locations === 'undefined')
+        if (typeof this.props.locations === 'undefined') {
             columns = 'Waiting for data';
+        } else if (this.props.locations.length === 0) {
+            columns = 'No data available'
+        }
         else {
             columns = this.props.locations.map((location : location) => {
                 return <Column location={location} key={location.id} />
