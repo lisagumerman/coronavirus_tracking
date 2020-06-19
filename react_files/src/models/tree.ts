@@ -45,7 +45,45 @@ export class MyTree<T> {
              representation += this.write(node.right, depth+1, representation);
         }
         return representation;
+    }
 
+    remove(key : number) {
+        this.deleteNode(key, this.root);
+    }
+
+    private deleteNode(key : number, node ?: MyNode<T>) : MyNode<T> | undefined {
+        if (!node) {
+            return undefined;
+        } else if (key < node.key) {
+            node.left = this.deleteNode(key, node.left);
+        } else if (key > node.key) {
+            node.right = this.deleteNode(key, node.right);
+        } else {
+            let next = this.findSmallest(node.right);
+            if(next) {
+                node.value = next.value;
+                node.key = next.key;
+                node.right=this.deleteNode(next.key, node.right);
+            }
+
+            //leaf case
+            if (!node.right && !node.left) {
+                node = undefined;
+            }
+        }
+
+        return node;
+    }
+
+    private findSmallest(node ?: MyNode<T>) : MyNode<T> | undefined {
+        if(!node) {
+            return undefined;
+        }
+        if (node.left) {
+            return this.findSmallest(node.left);
+        } else {
+            return node;
+        }
     }
 
 }
