@@ -2,6 +2,7 @@ import React, {Component, ReactNode} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import './App.css';
 import {LocationList} from "./pages/LocationList";
+import {LocationDetail} from "./pages/LocationDetail";
 
 
 class App extends Component<{}, {}> {
@@ -14,14 +15,13 @@ class App extends Component<{}, {}> {
               <h1>Coronavirus Tracking</h1>
             <Switch>
                 <Route path="/" exact component={LocationList} />
+                <Route path="/:locationId" component={LocationDetail} />
                 <Redirect to="/" />
             </Switch>
           </div>
         </BrowserRouter>
     )
   }
-
-  //TODO incorporate routing: /:locationId for specifics
 
 }
 
