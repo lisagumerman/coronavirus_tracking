@@ -1,8 +1,8 @@
 import React, {Component, ReactNode} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, RouteComponentProps} from "react-router-dom";
 import {location} from "../models/location";
 
-export interface DetailProps {
+export interface DetailProps extends RouteComponentProps {
     locationId : number
 }
 
@@ -15,7 +15,8 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
     render() : ReactNode {
         return(
             <div>
-                <h2>Heck</h2>
+                <h2>{this.state.location ? this.state.location.name : ''}</h2>
+
             </div>
         )
     }
@@ -28,7 +29,7 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
             this.setState({location: body})
         } catch (ex) {
             console.log(ex);
-            //TODO redirect
+            this.props.history.goBack();
         }
     }
 
