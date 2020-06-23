@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from tracker.models import Location, DateEntry
 from datetime import datetime
 import csv
-from tracker.utils import output
+from tracker.utils import output, to_num
 
 
 class Command(BaseCommand):
@@ -42,7 +42,7 @@ class Command(BaseCommand):
                             if 'N/A' not in value:
                                 entry = DateEntry(location=locations[int(idx/2)])
                                 entry.date = datetime.strptime(date_value, '%m/%d/%y').date()
-                                entry.value = int(value.replace(',', ''))
-                                entry.save()  # TODO eliminate dupes
+                                entry.value = to_num(value)
+                                entry.save()
                                 output(self, f'Data for {entry.location.name} on {entry.date} successfully written.')
             output(self, 'All data successfully written')

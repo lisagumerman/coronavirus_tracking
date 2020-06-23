@@ -2,18 +2,18 @@ from django.core.management.base import BaseCommand
 from tracker.models import Location, DateEntry, Detail
 from datetime import datetime
 import csv
-from tracker.utils import output
+from tracker.utils import output, to_num
 
 
 class Command(BaseCommand):
     help = 'Dump CSV Details'
 
     def add_arguments(self, parser):
-        parser.add_argument('path', nargs='+', type=str)
+        parser.add_argument('path', type=str)
 
     def handle(self, *args, **options):
         path = options['path']
-        location = Location.objects.get_or_create(name='Colorado', type='S')
+        location, new = Location.objects.get_or_create(name='Colorado', type='S')
         hosp_idx = None
         death_idx = None
         total_idx = None
@@ -28,15 +28,15 @@ class Command(BaseCommand):
                     continue
                 elif 'Date' in first_cell:
                     for idx, value in enumerate(row, start=1):
-                        if value == 'Hospitalizations':
+                        if 'Hospitalizations' in value:
                             hosp_idx = idx
-                        elif value == 'Deaths':
+                        elif 'Deaths' in value:
                             death_idx = idx
-                        elif value == 'New Tests':
+                        elif 'New Tests' in value:
                             new_idx = idx
-                        elif value == 'Total Tests':
+                        elif 'Total Tests' in value:
                             total_idx = idx
-                        elif value == 'Cases':
+                        elif 'Cases' in value:
                             case_idx = None
                         continue
                 elif first_cell is not '':
@@ -44,25 +44,25 @@ class Command(BaseCommand):
                     try:
                         entry = location.date_entries.get(date=date)
                         try:
-                            Detail.objects.get(entry=entry)
+                            Detail.objects.get(dateEntry=entry)
                             continue  # if we have the detail already, don't worry about it
                         except Detail.DoesNotExist:
-                            detail = Detail(entry=entry)
+                            detail = Detail(dateEntry=entry)
                     except DateEntry.DoesNotExist:
                         entry = DateEntry(location=location, date=date)
                         detail = Detail(dateEntry=entry)
 
                     for idx, value in enumerate(row, start=1):
                         if idx == hosp_idx:
-                            detail.hospitalizations = value
+                            detail.hospitalizations = to_num(value)
                         elif idx == death_idx:
-                            detail.deaths = value
+                            detail.deaths = to_num(value)
                         elif idx == total_idx:
-                            detail.totalTests = value
+                            detail.totalTests = to_num(value)
                         elif idx == new_idx:
-                            detail.newTests = value
+                            detail.newTests = to_num(value)
                         elif idx == case_idx:
-                            entry.value = value
+                            entry.value = to_num(value)
                     entry.save()
                     detail.save()
                     output(self, f'Data for {entry.location.name} on {entry.date} successfully written.')
