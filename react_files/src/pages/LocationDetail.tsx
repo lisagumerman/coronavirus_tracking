@@ -78,7 +78,7 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
                         <div className="value">{entry.date}</div>
                         <div className="value">{entry.value}</div>
                         <div className="value">{entry.detail ? entry.detail.deaths : "N/A"}</div>
-                        <div className="value">{entry.detail ? entry.detail.hospitaliations : "N/A"}</div>
+                        <div className="value">{entry.detail ? entry.detail.hospitalizations : "N/A"}</div>
                         <div className="value">{entry.detail ? entry.detail.totalTests : "N/A"}</div>
                         <div className="value">{entry.detail ? entry.detail.newTests : "N/A"}</div>
                     </div>
