@@ -15,7 +15,7 @@ export class Column extends Component<ColumnProps, {}> {
             dateEntries = this.props.location.date_entries.map((entry : dateEntry) => {
                 return (
                     <div className="entry" key={entry.id}>
-                        <div className="date">{entry.date}</div>
+                        <div className="value">{entry.date}</div>
                         <div className="value">{entry.value}</div>
                     </div>
                 )
