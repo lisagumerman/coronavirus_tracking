@@ -3,13 +3,15 @@ import {RouteComponentProps} from "react-router-dom";
 import {location} from "../models/location";
 import {Table} from "../components/table";
 import {dateEntry} from "../models/date-entry";
+import {Helmet} from "react-helmet";
 
 export interface DetailProps extends RouteComponentProps {
     locationId : number
 }
 
 export interface DetailState {
-    location : location | null
+    location : location | null,
+    titleName : string
 }
 
 export class LocationDetail extends Component<DetailProps, DetailState> {
@@ -18,7 +20,8 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
         super(props);
 
         this.state = {
-            location : null
+            location : null,
+            titleName : "Coronavirus Tracking"
         }
     }
 
@@ -26,6 +29,9 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
         if (this.state.location) {
             return(
                 <div>
+                    <Helmet>
+                        <title>{this.state.titleName}</title>
+                    </Helmet>
                     <h2>{this.state.location.name}</h2>
                     {this.renderDetails()}
                     {this.renderChildren()}
@@ -100,11 +106,11 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
     }
 
     async componentDidMount() {
-        let locationId = this.props.location.pathname.replace('/', '');
+        let locationId = this.props.location.pathname.replace(/\//g, '');
         try {
             let res = await fetch(`http://localhost:8000/tracker/locations/${locationId}/`);
             let body = await res.json();
-            this.setState({location: body})
+            this.setState({location: body, titleName: `Coronavirus Tracking: ${(body as location).name}`})
         } catch (ex) {
             console.log(ex);
             this.props.history.goBack();
