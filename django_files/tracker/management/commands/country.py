@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'Scrape Country stats'
 
     def add_arguments(self, parser):
-        parser.add_argument('name', nargs='+', type=str)
+        parser.add_argument('name', type=str)
 
     def handle(self, *args, **options):
         driver = webdriver.Chrome(driver_path)
@@ -33,12 +33,13 @@ class Command(BaseCommand):
         dates = None
         cases = None
         for start, end, obj in jsonfinder(full_text.split(';')[0]):
-            try:
-                obj.index('Mar 23')  # arbitrary start date
-            except ValueError:
-                cases = obj
-            else:
-                dates = obj
+            if obj is not None:
+                try:
+                    obj.index('Mar 23')  # arbitrary start date
+                except ValueError:
+                    cases = obj
+                else:
+                    dates = obj
 
         last_entry = country.date_entries.order_by('-date').first()
         one_day = timedelta(days=1)
@@ -52,8 +53,8 @@ class Command(BaseCommand):
 
             try:
                 idx = dates.index(date_format)
-                entry = DateEntry(location=country, date=needed_date)
-                entry.total_cases = cases.get(idx)
+                entry, c = DateEntry.objects.get_or_create(location=country, date=needed_date)
+                entry.total_cases = cases[idx]
                 entry.save()
 
                 output(self, f'Data for {needed_date} successfully written.')

@@ -39,10 +39,13 @@ class Command(BaseCommand):
                         if idx % 2 == 0 and date_value is not '':
                             val_idx = idx+1
                             value = row[val_idx]
-                            if 'N/A' not in value:
-                                entry = DateEntry(location=locations[int(idx/2)])
-                                entry.date = datetime.strptime(date_value, '%m/%d/%y').date()
-                                entry.value = to_num(value)
-                                entry.save()
-                                output(self, f'Data for {entry.location.name} on {entry.date} successfully written.')
+                            if 'N/A' not in value and value is not '':
+                                location = locations[int(idx/2)]
+                                date = datetime.strptime(date_value, '%m/%d/%y').date()
+                                val = to_num(value)
+                                entry, c = DateEntry.objects.get_or_create(location=location, date=date, value=val)
+                                if c:
+                                    output(self, f'Data for {entry.location.name} on {entry.date} successfully written.')
+                                else:
+                                    output(self, f'Data for {entry.location.name} on {entry.date} already written.')
             output(self, 'All data successfully written')
