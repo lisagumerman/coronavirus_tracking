@@ -33,7 +33,7 @@ export class LocationList extends Component<{}, ListState> {
                 <div className="buttonHolder">
                     {buttons}
                 </div>
-                <Table locations={this.state.locations.filter((loc : location) => loc.type === locationType[this.state.type].charAt(0))} />
+                <Table locations={this.state.locations.filter((loc : location) => loc.type === `LocationType.${locationType[this.state.type].charAt(0)}`)} />
             </div>
         )
     }

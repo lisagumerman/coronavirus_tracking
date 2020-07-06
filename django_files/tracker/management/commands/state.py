@@ -4,10 +4,11 @@ from django.core.management.base import BaseCommand
 from tracker.models import Location, DateEntry, LocationType
 from datetime import date, timedelta, datetime
 from tracker.utils import output, driver_path, to_num
+import string
 
 
 class Command(BaseCommand):
-    help = 'Scrape Country stats'
+    help = 'Scrape State stats'
 
     def add_arguments(self, parser):
         parser.add_argument('name', type=str)
@@ -21,19 +22,16 @@ class Command(BaseCommand):
 
         try:
 
-            temp_name = options['name'].lower()
-            if temp_name == 'usa':
-                name = 'USA'
-            elif temp_name == 'uk':
-                name = 'UK'
-            else:
-                name = options['name'].capitalize()
+            temp_name = options['name']
+            name = string.capwords(temp_name, '-')
 
-            path = f'https://www.worldometers.info/coronavirus/country/{temp_name.lower() if name != "USA" else "us"}/'
+            path = f'https://www.worldometers.info/coronavirus/usa/{temp_name.lower()}/'
 
             driver.get(path)
 
-            country, c = Location.objects.get_or_create(name=name, type=LocationType.N)
+            usa, uc = Location.objects.get_or_create(name="USA", type=LocationType.N)
+
+            state, c = Location.objects.get_or_create(name=name, type=LocationType.S, parent=usa)
             if c:
                 output(self, f'Just created {name}')
 
@@ -57,7 +55,7 @@ class Command(BaseCommand):
 
                 try:
                     idx = dates.index(date_format)
-                    entry, c = DateEntry.objects.get_or_create(location=country, date=needed_date)
+                    entry, c = DateEntry.objects.get_or_create(location=state, date=needed_date)
 
                     entry.value = cases[idx]
                     entry.save()

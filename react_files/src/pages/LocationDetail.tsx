@@ -46,9 +46,9 @@ export class LocationDetail extends Component<DetailProps, DetailState> {
         if (this.state.location) {
             let type = this.state.location.type;
 
-            if (type === "C") { return null; }
+            if (type === "LocationType.C") { return null; }
 
-            let h3 = type === "N" ? "States" : "Counties"; //a switch would be nicer, but screw it
+            let h3 = type === "LocationType.N" ? "States" : "Counties"; //a switch would be nicer, but screw it
 
             if (this.state.location.children) {
                 return (

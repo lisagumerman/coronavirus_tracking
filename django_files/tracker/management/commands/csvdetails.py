@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from tracker.models import Location, DateEntry, Detail
+from tracker.models import Location, DateEntry, Detail, LocationType
 from datetime import datetime
 import csv
 from tracker.utils import output, to_num
@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         path = options['path']
-        location, new = Location.objects.get_or_create(name='Colorado', type='S')
+        location, new = Location.objects.get_or_create(name='Colorado', type=LocationType.S)
         hosp_idx = None
         death_idx = None
         total_idx = None

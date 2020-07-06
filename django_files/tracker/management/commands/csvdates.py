@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from tracker.models import Location, DateEntry
+from tracker.models import Location, DateEntry, LocationType
 from datetime import datetime
 import csv
 from tracker.utils import output, to_num
@@ -25,14 +25,14 @@ class Command(BaseCommand):
                     for cell in row:
                         if 'Date' not in cell:
                             if loc_type == 'N':
-                                loc, c = Location.objects.get_or_create(name=cell, type=loc_type)
+                                loc, c = Location.objects.get_or_create(name=cell, type=LocationType.N)
                             elif loc_type == 'S':
-                                usa, c = Location.objects.get_or_create(name="USA", type="N")
-                                loc, c = Location.objects.get_or_create(name=cell, type=loc_type, parent=usa)
+                                usa, c = Location.objects.get_or_create(name="USA", type=LocationType.N)
+                                loc, c = Location.objects.get_or_create(name=cell, type=LocationType.S, parent=usa)
                             elif loc_type == 'C':
-                                usa, c = Location.objects.get_or_create(name="USA", type="N")
-                                colo, c = Location.objects.get_or_create(name="Colorado", type="S", parent=usa)
-                                loc, c = Location.objects.get_or_create(name=cell, type=loc_type, parent=colo)
+                                usa, c = Location.objects.get_or_create(name="USA", type=LocationType.N)
+                                colo, c = Location.objects.get_or_create(name="Colorado", type=LocationType.S, parent=usa)
+                                loc, c = Location.objects.get_or_create(name=cell, type=LocationType.C, parent=colo)
                             locations.append(loc)
                 elif first_cell is not '' and 'COVID' not in first_cell:
                     for idx, date_value in enumerate(row, start=0):

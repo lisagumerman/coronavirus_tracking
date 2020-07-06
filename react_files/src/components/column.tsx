@@ -1,6 +1,7 @@
 import React, {Component, ReactNode} from "react";
 import {location} from "../models/location";
 import {dateEntry} from "../models/date-entry";
+import {Link} from "react-router-dom";
 
 export interface ColumnProps { location: location }
 
@@ -25,7 +26,7 @@ export class Column extends Component<ColumnProps, {}> {
         return (
             <div className="column">
                 <div className="header">
-                    {this.props.location.name}
+                    <Link to={"/" + this.props.location.id}>{this.props.location.name}</Link>
                 </div>
                 <div className="entries">
                     {dateEntries}

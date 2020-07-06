@@ -1,5 +1,6 @@
-from .models import Location, DateEntry, Detail
+from .models import Location, DateEntry, Detail, LocationType
 from rest_framework import serializers
+from rest_enumfield import EnumField
 
 
 class DetailSerializer(serializers.ModelSerializer):
@@ -18,6 +19,7 @@ class DateEntrySerializer(serializers.ModelSerializer):
 
 class SubLocationSerializer(serializers.ModelSerializer):
     date_entries = DateEntrySerializer(many=True, read_only=True)
+    type = EnumField(choices=LocationType, to_choice=lambda x: (x, x.name), to_repr=lambda x: x)
 
     class Meta:
         model = Location
@@ -26,6 +28,7 @@ class SubLocationSerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
     date_entries = DateEntrySerializer(many=True, read_only=True)
+    type = EnumField(choices=LocationType, to_choice=lambda x: (x, x.name), to_repr=lambda x: x)
     children = SubLocationSerializer(many=True, read_only=True)
 
     class Meta:
