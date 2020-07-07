@@ -40,7 +40,7 @@ class DateEntry(models.Model):
     value = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['date']
         verbose_name_plural = 'date_entries'
         unique_together = ['date', 'location']
 

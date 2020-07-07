@@ -1,3 +1,5 @@
+@import "../node_modules/normalize.css/normalize.css";
+
 .App {
   text-align: center;
 }
@@ -26,7 +28,8 @@
 }
 
 .header * {
-  width: 100px;
+  width: 120px;
+  text-align:center;
 }
 
 .entry {
@@ -39,9 +42,50 @@
 }
 
 .value {
-  width: 100px
+  width: 120px;
+  box-sizing: border-box;
+  text-align:center;
+}
+
+.entry .value:first-child {
+  text-align:left;
+  padding-left:10px;
+}
+
+.entry .value:last-child {
+  text-align:right;
+  padding-right:10px;
+}
+
+.buttonHolder .button {
+  padding: 10px;
+  border: 0;
+  border-top:1px solid grey;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
+}
+
+.buttonHolder .button:focus {
+  outline: none;
+
+}
+
+.buttonHolder .button:first-child {
+  border-left: 1px solid grey;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.buttonHolder .button:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .button.active {
-  background-color: red;
+  background-color: cornflowerblue;
+}
+
+.header a {
+  color: cornflowerblue;
+  text-decoration: none;
 }
